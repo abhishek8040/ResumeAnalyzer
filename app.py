@@ -21,13 +21,16 @@ except ImportError:
     print("Warning: ReportLab not available. PDF generation will be limited.")
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key-here'
-app.config['UPLOAD_FOLDER'] = 'uploads'
+
+# Configuration for Vercel deployment
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key-here')
+app.config['UPLOAD_FOLDER'] = '/tmp/uploads' if os.getenv('VERCEL') else 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
-# Create uploads directory if it doesn't exist
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-os.makedirs('generated_resumes', exist_ok=True)
+# Create uploads directory if it doesn't exist (only in local development)
+if not os.getenv('VERCEL'):
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+    os.makedirs('generated_resumes', exist_ok=True)
 
 # Hugging Face API configuration
 HF_API_KEY = os.getenv('HF_API_KEY', 'your-hf-api-key-here')
@@ -262,14 +265,16 @@ def generate_resume():
     
     # Save HTML file
     html_filename = f"resume_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html"
-    html_path = os.path.join('generated_resumes', html_filename)
+    generated_dir = '/tmp/generated_resumes' if os.getenv('VERCEL') else 'generated_resumes'
+    os.makedirs(generated_dir, exist_ok=True)
+    html_path = os.path.join(generated_dir, html_filename)
     
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
     
     # Generate PDF
     pdf_filename = f"resume_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
-    pdf_path = os.path.join('generated_resumes', pdf_filename)
+    pdf_path = os.path.join(generated_dir, pdf_filename)
     
     try:
         if REPORTLAB_AVAILABLE:
@@ -629,7 +634,8 @@ def generate_resume_html(template_id, resume_data):
 
 @app.route('/download/<filename>')
 def download_file(filename):
-    file_path = os.path.join('generated_resumes', filename)
+    generated_dir = '/tmp/generated_resumes' if os.getenv('VERCEL') else 'generated_resumes'
+    file_path = os.path.join(generated_dir, filename)
     if os.path.exists(file_path):
         return send_file(file_path, as_attachment=True)
     return jsonify({'error': 'File not found'}), 404
