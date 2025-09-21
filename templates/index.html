@@ -1,0 +1,531 @@
+{% extends "base.html" %}
+
+{% block title %}Resume Analyzer - AI-Powered Resume Analysis{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">AI-Powered Resume Analysis</h1>
+        <p class="hero-subtitle">Upload your resume and get instant AI-powered feedback, suggestions, and professional templates</p>
+        
+        <div class="upload-container">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h3>Drop your PDF resume here</h3>
+                <p>or <span class="upload-link">browse files</span></p>
+                <input type="file" id="fileInput" accept=".pdf" hidden>
+            </div>
+            
+            <div class="upload-progress" id="uploadProgress" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text">Analyzing your resume...</p>
+            </div>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>AI Analysis</h3>
+                <p>Get detailed feedback on your resume using advanced AI models</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Score & Rating</h3>
+                <p>Receive a comprehensive score and improvement suggestions</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3>Professional Templates</h3>
+                <p>Choose from ATS-friendly resume templates</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <h3>PDF Export</h3>
+                <p>Download your improved resume as a professional PDF</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Modal -->
+<div class="modal" id="resultsModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Resume Analysis Results</h2>
+            <button class="close-btn" id="closeModal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="results-container">
+                <!-- Score Section -->
+                <div class="score-section">
+                    <div class="score-card">
+                        <h3>Overall Score</h3>
+                        <div class="score-circle">
+                            <div class="score-value" id="overallScore">0</div>
+                            <div class="score-max">/10</div>
+                        </div>
+                        <p class="score-feedback" id="scoreFeedback">Loading...</p>
+                    </div>
+                    
+                    <div class="ats-score-card">
+                        <h3>ATS Readability</h3>
+                        <div class="ats-progress">
+                            <div class="ats-bar">
+                                <div class="ats-fill" id="atsFill"></div>
+                            </div>
+                            <span class="ats-percentage" id="atsPercentage">0%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Highlights Section -->
+                <div class="highlights-section">
+                    <h3>Key Highlights</h3>
+                    <div class="highlights-grid">
+                        <div class="highlight-card">
+                            <h4><i class="fas fa-code"></i> Skills</h4>
+                            <div class="skills-list" id="skillsList"></div>
+                        </div>
+                        
+                        <div class="highlight-card">
+                            <h4><i class="fas fa-project-diagram"></i> Projects</h4>
+                            <div class="projects-list" id="projectsList"></div>
+                        </div>
+                        
+                        <div class="highlight-card">
+                            <h4><i class="fas fa-key"></i> Keywords</h4>
+                            <div class="keywords-list" id="keywordsList"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Suggestions Section -->
+                <div class="suggestions-section">
+                    <h3>Improvement Suggestions</h3>
+                    <div class="suggestions-accordion" id="suggestionsAccordion"></div>
+                </div>
+                
+                <!-- Generated Summary -->
+                <div class="summary-section">
+                    <h3>AI-Generated Summary</h3>
+                    <div class="summary-card">
+                        <p id="generatedSummary">Loading...</p>
+                    </div>
+                </div>
+                
+                <!-- Job Comparison -->
+                <div class="job-comparison-section">
+                    <h3>Job Match Analysis</h3>
+                    <div class="job-comparison-card">
+                        <div class="job-input">
+                            <input type="text" id="targetJob" placeholder="Enter target job title" value="Software Developer">
+                            <button id="analyzeJobMatch" class="btn btn-primary">Analyze Match</button>
+                        </div>
+                        <div class="missing-skills" id="missingSkills"></div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="viewTemplates">View Templates</button>
+                    <button class="btn btn-primary" id="generateResume">Generate New Resume</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template Selection Modal -->
+<div class="modal" id="templateModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Choose a Resume Template</h2>
+            <button class="close-btn" id="closeTemplateModal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="templates-grid" id="templatesGrid">
+                <!-- Templates will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Comparison Modal -->
+<div class="modal" id="comparisonModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Before vs After Comparison</h2>
+            <button class="close-btn" id="closeComparisonModal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="comparison-container">
+                <div class="comparison-card">
+                    <h3>Original Resume</h3>
+                    <div class="score-display">
+                        <div class="score-circle">
+                            <div class="score-value" id="originalScore">0</div>
+                            <div class="score-max">/10</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <h3>Improved Resume</h3>
+                    <div class="score-display">
+                        <div class="score-circle">
+                            <div class="score-value" id="improvedScore">0</div>
+                            <div class="score-max">/10</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="improvement-summary">
+                    <h3>Improvement</h3>
+                    <div class="improvement-value" id="improvementValue">+0 points</div>
+                    <div class="improvement-percentage" id="improvementPercentage">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Global variables
+let currentAnalysis = null;
+let currentResumeData = null;
+
+// Initialize the app
+document.addEventListener('DOMContentLoaded', function() {
+    initializeUpload();
+    initializeModals();
+});
+
+function initializeUpload() {
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const uploadProgress = document.getElementById('uploadProgress');
+    
+    // Click to upload
+    uploadArea.addEventListener('click', () => fileInput.click());
+    
+    // Drag and drop
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFileUpload(files[0]);
+        }
+    });
+    
+    // File input change
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleFileUpload(e.target.files[0]);
+        }
+    });
+}
+
+function handleFileUpload(file) {
+    if (!file.type.includes('pdf')) {
+        alert('Please upload a PDF file');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    // Show progress
+    document.getElementById('uploadProgress').style.display = 'block';
+    document.getElementById('uploadArea').style.display = 'none';
+    
+    // Simulate progress
+    let progress = 0;
+    const progressInterval = setInterval(() => {
+        progress += Math.random() * 20;
+        if (progress > 90) progress = 90;
+        document.getElementById('progressFill').style.width = progress + '%';
+    }, 200);
+    
+    // Upload file
+    fetch('/upload', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        clearInterval(progressInterval);
+        document.getElementById('progressFill').style.width = '100%';
+        
+        if (data.error) {
+            alert('Error: ' + data.error);
+            resetUpload();
+        } else {
+            currentAnalysis = data;
+            currentResumeData = data;
+            displayResults(data);
+        }
+    })
+    .catch(error => {
+        clearInterval(progressInterval);
+        console.error('Error:', error);
+        alert('Upload failed. Please try again.');
+        resetUpload();
+    });
+}
+
+function resetUpload() {
+    document.getElementById('uploadProgress').style.display = 'none';
+    document.getElementById('uploadArea').style.display = 'block';
+    document.getElementById('progressFill').style.width = '0%';
+}
+
+function displayResults(data) {
+    // Update score
+    document.getElementById('overallScore').textContent = data.analysis.rating.score;
+    document.getElementById('scoreFeedback').textContent = data.analysis.rating.feedback;
+    
+    // Update ATS score
+    const atsPercentage = data.ats_score;
+    document.getElementById('atsFill').style.width = atsPercentage + '%';
+    document.getElementById('atsPercentage').textContent = atsPercentage + '%';
+    
+    // Update highlights
+    updateHighlights(data.analysis.highlights);
+    
+    // Update suggestions
+    updateSuggestions(data.analysis.suggestions);
+    
+    // Update summary
+    document.getElementById('generatedSummary').textContent = data.analysis.summary;
+    
+    // Show modal
+    document.getElementById('resultsModal').style.display = 'block';
+    
+    // Reset upload area
+    resetUpload();
+}
+
+function updateHighlights(highlights) {
+    // Skills
+    const skillsList = document.getElementById('skillsList');
+    skillsList.innerHTML = highlights.skills.map(skill => 
+        `<span class="skill-tag">${skill}</span>`
+    ).join('');
+    
+    // Projects
+    const projectsList = document.getElementById('projectsList');
+    projectsList.innerHTML = highlights.projects.map(project => 
+        `<div class="project-item">${project}</div>`
+    ).join('');
+    
+    // Keywords
+    const keywordsList = document.getElementById('keywordsList');
+    keywordsList.innerHTML = highlights.keywords.map(keyword => 
+        `<span class="keyword-tag">${keyword}</span>`
+    ).join('');
+}
+
+function updateSuggestions(suggestions) {
+    const accordion = document.getElementById('suggestionsAccordion');
+    accordion.innerHTML = Object.entries(suggestions).map(([section, suggestion]) => `
+        <div class="suggestion-item">
+            <div class="suggestion-header">
+                <h4>${section.charAt(0).toUpperCase() + section.slice(1)}</h4>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="suggestion-content">
+                <p>${suggestion}</p>
+            </div>
+        </div>
+    `).join('');
+    
+    // Add accordion functionality
+    document.querySelectorAll('.suggestion-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('i');
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            icon.style.transform = content.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+    });
+}
+
+function initializeModals() {
+    // Close modals
+    document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('resultsModal').style.display = 'none';
+    });
+    
+    document.getElementById('closeTemplateModal').addEventListener('click', () => {
+        document.getElementById('templateModal').style.display = 'none';
+    });
+    
+    document.getElementById('closeComparisonModal').addEventListener('click', () => {
+        document.getElementById('comparisonModal').style.display = 'none';
+    });
+    
+    // Action buttons
+    document.getElementById('viewTemplates').addEventListener('click', () => {
+        document.getElementById('templateModal').style.display = 'block';
+        loadTemplates();
+    });
+    
+    document.getElementById('generateResume').addEventListener('click', () => {
+        generateResume();
+    });
+    
+    document.getElementById('analyzeJobMatch').addEventListener('click', () => {
+        analyzeJobMatch();
+    });
+}
+
+function loadTemplates() {
+    fetch('/templates')
+    .then(response => response.json())
+    .then(templates => {
+        const grid = document.getElementById('templatesGrid');
+        grid.innerHTML = templates.map(template => `
+            <div class="template-card" data-template-id="${template.id}">
+                <div class="template-preview">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <h3>${template.name}</h3>
+                <p>${template.description}</p>
+                <button class="btn btn-primary select-template" data-template-id="${template.id}">
+                    Select Template
+                </button>
+            </div>
+        `).join('');
+        
+        // Add click handlers
+        document.querySelectorAll('.select-template').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const templateId = e.target.getAttribute('data-template-id');
+                selectTemplate(templateId);
+            });
+        });
+    });
+}
+
+function selectTemplate(templateId) {
+    if (!currentResumeData) {
+        alert('Please upload a resume first');
+        return;
+    }
+    
+    const resumeData = {
+        name: 'John Doe', // This would come from the analysis
+        title: 'Software Developer',
+        email: 'john.doe@example.com',
+        phone: '(555) 123-4567',
+        summary: currentAnalysis.analysis.summary,
+        skills: currentAnalysis.analysis.highlights.skills,
+        experience: 'Software Developer at Tech Corp (2020-2023)',
+        education: 'Bachelor of Computer Science, University of Technology'
+    };
+    
+    fetch('/generate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            template_id: templateId,
+            resume_data: resumeData
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Resume generated successfully!');
+            // Show download links
+            showDownloadLinks(data);
+        } else {
+            alert('Error generating resume: ' + data.error);
+        }
+    });
+}
+
+function showDownloadLinks(data) {
+    const modal = document.getElementById('templateModal');
+    const downloadSection = document.createElement('div');
+    downloadSection.className = 'download-section';
+    downloadSection.innerHTML = `
+        <h3>Download Your Resume</h3>
+        <div class="download-buttons">
+            <a href="${data.html_url}" class="btn btn-secondary" download>Download HTML</a>
+            <a href="${data.pdf_url}" class="btn btn-primary" download>Download PDF</a>
+        </div>
+    `;
+    modal.querySelector('.modal-body').appendChild(downloadSection);
+}
+
+function analyzeJobMatch() {
+    const targetJob = document.getElementById('targetJob').value;
+    if (!targetJob) {
+        alert('Please enter a target job title');
+        return;
+    }
+    
+    // Mock job analysis
+    const missingSkills = ['Docker', 'AWS', 'React', 'Agile'];
+    const matchPercentage = 75;
+    
+    const missingSkillsDiv = document.getElementById('missingSkills');
+    missingSkillsDiv.innerHTML = `
+        <div class="match-info">
+            <h4>Match with "${targetJob}": ${matchPercentage}%</h4>
+            <div class="missing-skills-list">
+                <h5>Missing Skills:</h5>
+                ${missingSkills.map(skill => `<span class="missing-skill">${skill}</span>`).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function generateResume() {
+    // This would trigger the resume generation process
+    alert('Resume generation feature coming soon!');
+}
+
+// Close modals when clicking outside
+window.addEventListener('click', (e) => {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

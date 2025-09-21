@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+
+{% block title %}Resume Templates - Resume Analyzer{% endblock %}
+
+{% block content %}
+<div class="templates-page">
+    <div class="page-header">
+        <h1>Professional Resume Templates</h1>
+        <p>Choose from our collection of ATS-friendly resume templates</p>
+    </div>
+    
+    <div class="templates-container">
+        <div class="templates-grid">
+            <div class="template-card">
+                <div class="template-preview">
+                    <div class="template-preview-content">
+                        <div class="preview-header">
+                            <div class="preview-name">John Doe</div>
+                            <div class="preview-title">Software Developer</div>
+                        </div>
+                        <div class="preview-sections">
+                            <div class="preview-section">
+                                <h4>Experience</h4>
+                                <p>Software Developer at Tech Corp</p>
+                            </div>
+                            <div class="preview-section">
+                                <h4>Skills</h4>
+                                <div class="preview-skills">
+                                    <span>Python</span>
+                                    <span>Flask</span>
+                                    <span>React</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Modern Professional</h3>
+                    <p>Clean and contemporary design perfect for tech roles and modern industries</p>
+                    <div class="template-features">
+                        <span class="feature-tag">ATS-Friendly</span>
+                        <span class="feature-tag">Modern Design</span>
+                        <span class="feature-tag">Tech Focused</span>
+                    </div>
+                    <button class="btn btn-primary select-template" data-template-id="modern">
+                        Select Template
+                    </button>
+                </div>
+            </div>
+            
+            <div class="template-card">
+                <div class="template-preview">
+                    <div class="template-preview-content classic">
+                        <div class="preview-header">
+                            <div class="preview-name">Jane Smith</div>
+                            <div class="preview-title">Marketing Manager</div>
+                        </div>
+                        <div class="preview-sections">
+                            <div class="preview-section">
+                                <h4>Professional Experience</h4>
+                                <p>Marketing Manager at Global Corp</p>
+                            </div>
+                            <div class="preview-section">
+                                <h4>Education</h4>
+                                <p>MBA in Marketing</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Classic Executive</h3>
+                    <p>Traditional format ideal for corporate positions and executive roles</p>
+                    <div class="template-features">
+                        <span class="feature-tag">Executive Style</span>
+                        <span class="feature-tag">Corporate</span>
+                        <span class="feature-tag">Professional</span>
+                    </div>
+                    <button class="btn btn-primary select-template" data-template-id="classic">
+                        Select Template
+                    </button>
+                </div>
+            </div>
+            
+            <div class="template-card">
+                <div class="template-preview">
+                    <div class="template-preview-content creative">
+                        <div class="preview-header">
+                            <div class="preview-name">Alex Johnson</div>
+                            <div class="preview-title">Creative Director</div>
+                        </div>
+                        <div class="preview-sections">
+                            <div class="preview-section">
+                                <h4>Portfolio</h4>
+                                <p>Creative projects and designs</p>
+                            </div>
+                            <div class="preview-section">
+                                <h4>Skills</h4>
+                                <div class="preview-skills">
+                                    <span>Design</span>
+                                    <span>Branding</span>
+                                    <span>UI/UX</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Creative Portfolio</h3>
+                    <p>Eye-catching design for creative professionals and designers</p>
+                    <div class="template-features">
+                        <span class="feature-tag">Creative</span>
+                        <span class="feature-tag">Portfolio</span>
+                        <span class="feature-tag">Visual</span>
+                    </div>
+                    <button class="btn btn-primary select-template" data-template-id="creative">
+                        Select Template
+                    </button>
+                </div>
+            </div>
+            
+            <div class="template-card">
+                <div class="template-preview">
+                    <div class="template-preview-content minimal">
+                        <div class="preview-header">
+                            <div class="preview-name">Sarah Wilson</div>
+                            <div class="preview-title">Data Scientist</div>
+                        </div>
+                        <div class="preview-sections">
+                            <div class="preview-section">
+                                <h4>Technical Skills</h4>
+                                <p>Python, R, Machine Learning</p>
+                            </div>
+                            <div class="preview-section">
+                                <h4>Projects</h4>
+                                <p>Data analysis and ML models</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Minimal Tech</h3>
+                    <p>Minimalist design focused on technical skills and achievements</p>
+                    <div class="template-features">
+                        <span class="feature-tag">Minimal</span>
+                        <span class="feature-tag">Tech Focus</span>
+                        <span class="feature-tag">Clean</span>
+                    </div>
+                    <button class="btn btn-primary select-template" data-template-id="minimal">
+                        Select Template
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="template-features-section">
+        <h2>Why Our Templates?</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>ATS Optimized</h3>
+                <p>All templates are designed to pass Applicant Tracking Systems</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Responsive Design</h3>
+                <p>Looks great on all devices and screen sizes</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <h3>Easy Export</h3>
+                <p>Download as PDF or HTML with one click</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <h3>Customizable</h3>
+                <p>Easy to modify colors, fonts, and layout</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template Selection Modal -->
+<div class="modal" id="templateSelectionModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Generate Resume with Template</h2>
+            <button class="close-btn" id="closeTemplateSelectionModal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="template-selection-form">
+                <div class="form-group">
+                    <label for="resumeName">Full Name</label>
+                    <input type="text" id="resumeName" placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="resumeTitle">Professional Title</label>
+                    <input type="text" id="resumeTitle" placeholder="e.g., Software Developer">
+                </div>
+                
+                <div class="form-group">
+                    <label for="resumeEmail">Email</label>
+                    <input type="email" id="resumeEmail" placeholder="your.email@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="resumePhone">Phone</label>
+                    <input type="tel" id="resumePhone" placeholder="(555) 123-4567">
+                </div>
+                
+                <div class="form-group">
+                    <label for="resumeSummary">Professional Summary</label>
+                    <textarea id="resumeSummary" rows="4" placeholder="Brief professional summary..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="resumeSkills">Skills (comma-separated)</label>
+                    <input type="text" id="resumeSkills" placeholder="Python, Flask, React, SQL">
+                </div>
+                
+                <div class="form-group">
+                    <label for="resumeExperience">Work Experience</label>
+                    <textarea id="resumeExperience" rows="3" placeholder="Describe your work experience..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="resumeEducation">Education</label>
+                    <textarea id="resumeEducation" rows="2" placeholder="Your educational background..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button class="btn btn-secondary" id="cancelTemplateSelection">Cancel</button>
+                    <button class="btn btn-primary" id="generateWithTemplate">Generate Resume</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    initializeTemplateSelection();
+});
+
+function initializeTemplateSelection() {
+    // Template selection
+    document.querySelectorAll('.select-template').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const templateId = e.target.getAttribute('data-template-id');
+            showTemplateSelectionModal(templateId);
+        });
+    });
+    
+    // Modal controls
+    document.getElementById('closeTemplateSelectionModal').addEventListener('click', () => {
+        document.getElementById('templateSelectionModal').style.display = 'none';
+    });
+    
+    document.getElementById('cancelTemplateSelection').addEventListener('click', () => {
+        document.getElementById('templateSelectionModal').style.display = 'none';
+    });
+    
+    document.getElementById('generateWithTemplate').addEventListener('click', () => {
+        generateResumeWithTemplate();
+    });
+}
+
+function showTemplateSelectionModal(templateId) {
+    document.getElementById('templateSelectionModal').style.display = 'block';
+    document.getElementById('templateSelectionModal').setAttribute('data-template-id', templateId);
+}
+
+function generateResumeWithTemplate() {
+    const templateId = document.getElementById('templateSelectionModal').getAttribute('data-template-id');
+    
+    const resumeData = {
+        name: document.getElementById('resumeName').value,
+        title: document.getElementById('resumeTitle').value,
+        email: document.getElementById('resumeEmail').value,
+        phone: document.getElementById('resumePhone').value,
+        summary: document.getElementById('resumeSummary').value,
+        skills: document.getElementById('resumeSkills').value.split(',').map(s => s.trim()),
+        experience: document.getElementById('resumeExperience').value,
+        education: document.getElementById('resumeEducation').value
+    };
+    
+    // Validate required fields
+    if (!resumeData.name || !resumeData.title || !resumeData.email) {
+        alert('Please fill in all required fields (Name, Title, Email)');
+        return;
+    }
+    
+    // Show loading
+    const generateBtn = document.getElementById('generateWithTemplate');
+    const originalText = generateBtn.textContent;
+    generateBtn.textContent = 'Generating...';
+    generateBtn.disabled = true;
+    
+    fetch('/generate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            template_id: templateId,
+            resume_data: resumeData
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showDownloadLinks(data);
+        } else {
+            alert('Error generating resume: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error generating resume. Please try again.');
+    })
+    .finally(() => {
+        generateBtn.textContent = originalText;
+        generateBtn.disabled = false;
+    });
+}
+
+function showDownloadLinks(data) {
+    const modal = document.getElementById('templateSelectionModal');
+    const downloadSection = document.createElement('div');
+    downloadSection.className = 'download-section';
+    downloadSection.innerHTML = `
+        <div class="success-message">
+            <i class="fas fa-check-circle"></i>
+            <h3>Resume Generated Successfully!</h3>
+        </div>
+        <div class="download-buttons">
+            <a href="${data.html_url}" class="btn btn-secondary" download>
+                <i class="fas fa-file-code"></i> Download HTML
+            </a>
+            <a href="${data.pdf_url}" class="btn btn-primary" download>
+                <i class="fas fa-file-pdf"></i> Download PDF
+            </a>
+        </div>
+        <div class="next-steps">
+            <p>You can now use this resume to apply for jobs or upload it back to our analyzer for further improvements!</p>
+        </div>
+    `;
+    
+    // Clear form and add download section
+    modal.querySelector('.template-selection-form').style.display = 'none';
+    modal.querySelector('.modal-body').appendChild(downloadSection);
+    
+    // Add close button functionality
+    setTimeout(() => {
+        document.getElementById('closeTemplateSelectionModal').addEventListener('click', () => {
+            modal.querySelector('.template-selection-form').style.display = 'block';
+            downloadSection.remove();
+            document.getElementById('templateSelectionModal').style.display = 'none';
+        });
+    }, 100);
+}
+
+// Close modal when clicking outside
+window.addEventListener('click', (e) => {
+    if (e.target === document.getElementById('templateSelectionModal')) {
+        document.getElementById('templateSelectionModal').style.display = 'none';
+    }
+});
+</script>
+{% endblock %}
