@@ -1,0 +1,16 @@
+{
+  "name": "resume-analysis-app",
+  "version": "1.0.0",
+  "description": "A web application for analyzing resumes and providing feedback to improve job applications.",
+  "scripts": {
+    "postinstall": "echo 'Root deps managed per-package (client/server).'"
+  },
+  "keywords": [
+    "resume",
+    "analysis",
+    "job",
+    "application"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
